@@ -18,6 +18,9 @@ backup_cartelas = {nome: cartela.copy() for nome, cartela in cartelas.items()}
 # quantidade de números faltantes
 def imprimir_cartelas():
     os.system('clear')
+    print()
+    print('------------------------')
+    print()
     print(f"Você possui {len(cartelas)} cartelas na base de dados!\n") # quantidade de cartelas na base
     
     for nome, cartela in cartelas.items():
