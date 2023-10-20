@@ -1,39 +1,50 @@
-# Crie um dicionário onde as chaves são os nomes das cartelas e os valores são as listas de números
+import os
+
+# id da cartela : números
 cartelas = {
-    'id1': [7, 19, 33, 50, 66, 2, 15, 35, 54, 72, 10, 23, 40, 59, 76, 1, 16, 29, 47, 65, 11, 22, 37, 53],
-    'id2': [12, 27, 36, 49, 68, 6, 18, 38, 52, 75, 8, 25, 34, 45, 63, 9, 21, 39, 51, 70, 5, 20, 30, 48],
-    'id3': [13, 24, 31, 46, 60, 4, 14, 32, 57, 71, 3, 17, 41, 56, 69, 7, 26, 44, 55, 73, 15, 28, 42, 62],
-    'id4': [1, 16, 30, 45, 64, 2, 19, 33, 50, 70, 8, 22, 34, 52, 75, 9, 25, 35, 47, 67, 11, 23, 38, 53],
-    'id5': [14, 27, 31, 49, 68, 7, 15, 32, 59, 71, 10, 20, 36, 55, 66, 6, 18, 40, 57, 73, 3, 12, 37, 54]
+    '1309': [10, 6, 11, 13, 2, 25, 26, 28, 21, 17, 39, 41, 36, 34, 58, 51, 47, 55, 56, 66, 62, 70, 71, 73],
+    '062': [12, 5, 3, 2, 4, 23, 26, 27, 28, 22, 40, 38, 32, 33, 52, 56, 57, 54, 60, 74, 67, 62, 61, 70],
+    '428': [12, 15, 5, 11, 9, 23, 25, 28, 16, 19, 42, 34, 33, 44, 51, 53, 57, 48, 60, 71, 70, 66, 75, 74],
+    '1404': [2, 14, 6, 5, 9, 21, 28, 17, 29, 19, 36, 42, 43, 31, 51, 47, 57, 54, 55, 66, 67, 73, 74, 62],
+    '1306': [8, 11, 12, 3, 4, 27, 18, 19, 23, 26, 40, 44, 39, 34, 48, 49, 53, 56, 57, 64, 68, 71, 72, 63],
+    '1308': [2, 10, 11, 12, 7, 26, 25, 27, 17, 22, 42, 35, 33, 34, 57, 47, 52, 55, 56, 62, 67, 70, 71, 72],
 }
 
-# Crie um dicionário de backup para cada cartela
+cartelas = dict(sorted(cartelas.items(), key=lambda item: int(item[0])))
+
+# dicionário de backup para cada cartela
 backup_cartelas = {nome: cartela.copy() for nome, cartela in cartelas.items()}
 
-# Função para imprimir as cartelas e a quantidade de números faltantes
+# quantidade de números faltantes
 def imprimir_cartelas():
+    os.system('clear')
+    print(f"Você possui {len(cartelas)} cartelas na base de dados!\n") # quantidade de cartelas na base
+    
     for nome, cartela in cartelas.items():
         print(f"{nome}: {cartela}")
         print(f"FALTAM {len(cartelas[nome])} números")
         print()
 
-# Imprime as cartelas iniciais
+# cartelas iniciais
 imprimir_cartelas()
 
 while True:
-    entrada = input("Digite um número (ou 'xd' para desfazer a última jogada): ")
-    
+    entrada = input(
+        "Digite um número (ou 'xd' para desfazer a última jogada): ")
+
     if entrada.lower() == 'xd':
         if not backup_cartelas:
             print("Nada para desfazer.")
         else:
-            cartelas = {nome: cartela.copy() for nome, cartela in backup_cartelas.items()}
+            cartelas = {nome: cartela.copy()
+                        for nome, cartela in backup_cartelas.items()}
             print("Desfez a última jogada.")
             imprimir_cartelas()
     else:
         try:
             numero = int(entrada)
-            backup_cartelas = {nome: cartela.copy() for nome, cartela in cartelas.items()}
+            backup_cartelas = {nome: cartela.copy()
+                               for nome, cartela in cartelas.items()}
             for nome, cartela in cartelas.items():
                 if numero in cartela:
                     cartela.remove(numero)
